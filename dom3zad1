@@ -1,0 +1,235 @@
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+using namespace std;
+int asked[10];
+int curr = 0;
+int wrongs = 0;
+char questions[10][150] = {
+    "Koi e nai-visokiqt vruh na Zemqta?\n"
+    "A: K8\nB: Everest\nC: Kilimandjaro\nD:Olimp\n",
+    "Koq e nai-dulgata reka na Zemqta?\n"
+    "A: Amazonka\nB: Kolorado\nC: Volga\nD: Nil\n",
+    "Koi e nai-golemiqt bozainik na Zemqta?\n"
+    "A: Slon\nB: Sin kit\nC: Nosorog\nD: Akula\n",
+    "Koq e nai-dulgata reka v Bulgaria?\n"
+    "A: Qntra\nB: Marica\nC: Iskur\nD: Dunav\n",
+    "Koq e stolicata na Kosovo?\n"
+    "A: Mitrovnica\nB: Gjilan\nC: Pristina\nD: Prizren\n",
+    "Kolko sa na broi musketarite?\n"
+    "A: 4\nB: 2\nC: 1\nD: 3\n",
+    "Kolko sa na na broi kontinentite?\n"
+    "A: 12\nB: 7\nC: 6\nD: 8\n",
+    "Koi otbor pecheli Champions League prez 2019 godina?\n"
+    "A: Liverpool\nB: Real Madrid\nC: Barcelona\nD: Tottenham\n",
+    "Kolko e visok vruh Musala?\n"
+    "A: 1991 m.\nB: 2875 m.\nC: 7650 m.\nD: 2925 m.\n",
+    "5 + 5 = ?\n"
+    "A: 5\nB: 15\nC: 10\nD: 12\n"
+ };
+char correct[10] = {'B', 'D', 'B', 'C', 'C', 'A', 'B', 'A', 'D', 'C'};
+char ansA[10][100] = {
+    "A: K8\n",
+    "A: Amazonka\n",
+    "A: Slon\n",
+    "A: Qntra\n",
+    "A: Mitrovnica\n",
+    "A: 4\n",
+    "A: 12\n",
+    "A: Liverpool\n",
+    "A: 1991 m.\n",
+    "A: 5\n"
+};
+char ansB[10][100] = {
+    "B: Everest\n",
+    "B: Kolorado\n",
+    "B: Sin kit\n",
+    "B: Marica\n",
+    "B: Gjilan\n",
+    "B: 2\n",
+    "B: 7\n",
+    "B: Real Madrid\n",
+    "B: 2875\n",
+    "B: 15\n"
+};
+char ansC[10][100] = {
+    "C: Kilimandjaro\n",
+    "C: Volga\n",
+    "C: Nosorog\n",
+    "C: Iskur\n",
+    "C: Pristina\n",
+    "C: 1\n",
+    "C: 6\n",
+    "C: Barcelona\n",
+    "C: 7650 m.\n",
+    "C: 10\n"
+};
+char ansD[10][100] = {
+    "D: Olimp\n",
+    "D: Nil\n",
+    "D: Akula\n",
+    "D: Dunav\n",
+    "D: Prizren\n",
+    "D: 3\n",
+    "D: 8\n",
+    "D: Tottenham\n",
+    "D: 2925 m.\n",
+    "D: 12\n"
+};
+bool isAsked(int n)
+{
+    for(int i = 0; i < curr; ++i)
+    {
+        if(asked[i] == n) return true;
+    }
+    return false;
+}
+int random()
+{
+    srand(time(NULL));
+    int k = rand() %10;
+    while(isAsked(k))
+    {
+        k = rand() %10;
+    }
+    asked[curr] = k;
+    curr++;
+    return k;
+}
+char* randChoice(int ind)
+{
+    return questions[ind];
+}
+bool check(char inp, int ind)
+{
+    return inp == correct[ind];
+}
+ 
+int main()
+{
+    bool guess = true;
+    while(guess)
+    {
+        if(curr < 10)
+        {
+            int ind = random();
+        cout << randChoice(ind);
+        cout << "Enter your choice: ";
+        char inp;
+        cin >> inp;
+        if(inp == 'J')
+        {
+            srand(time(NULL));
+            int k = rand() %4;
+            int cntcorr = 0, cntwrong = 0;
+            if(correct[ind] == 'A')
+            {
+                cout << ansA[ind];
+                int aaa = rand()%3 + 1;
+                switch(aaa)
+                {
+                case 1:
+                    cout << ansB[ind];
+                    break;
+                case 2:
+                    cout << ansC[ind];
+                    break;
+                case 3:
+                    cout << ansD[ind];
+                    break;
+                default:
+                    break;
+                }
+            }
+            else if(correct[ind] == 'B')
+            {
+                int aaa = rand()%3 + 1;
+                switch(aaa)
+                {
+                case 1:
+                    cout << ansA[ind];
+                    cout << ansB[ind];
+                    break;
+                case 2:
+                    cout << ansB[ind];
+                    cout << ansC[ind];
+                    break;
+                case 3:
+                    cout << ansB[ind];
+                    cout << ansD[ind];
+                    break;
+                default:
+                    break;
+                }
+            }
+            else if(correct[ind] == 'C')
+            {
+                int aaa = rand()%3 + 1;
+                switch(aaa){
+                case 1:
+                    cout << ansA[ind];
+                    cout << ansC[ind];
+                    break;
+                case 2:
+                    cout << ansB[ind];
+                    cout << ansC[ind];
+                    break;
+                case 3:
+                    cout << ansC[ind];
+                    cout << ansD[ind];
+                    break;
+                default:
+                    break;
+                }
+            }
+            else if(correct[ind] == 'D')
+            {
+                int aaa = rand()%3 + 1;
+                switch(aaa){
+                case 1:
+                    cout << ansA[ind];
+                    break;
+                case 2:
+                    cout << ansB[ind];
+                    break;
+                case 3:
+                    cout << ansC[ind];
+                    break;
+                default:
+                    break;
+                }
+                cout << ansD[ind];
+            }
+            else
+            {
+                cout << "RANODOM ERROR EBAGOO";
+            }
+            cout << "Enter your choice: ";
+            cin >> inp;
+        }
+        if(check(inp, ind)){
+            cout << "Correct!";
+            guess = true;
+        }
+        else{
+            cout << "Wrong!";
+            guess = false;
+            wrongs++;
+            char chance;
+            cout << "Do you want to continue? Y or N: ";
+            cin >> chance;
+            if(chance == 'Y') guess = true;
+            else{
+                cout << "You've lost the game! But you win " << (curr-wrongs)*100000 << " $!\n\n";
+            }
+        }
+        cout << endl << endl;
+        }
+        else
+        {
+            cout << "Congratulations! You've won " << (curr-wrongs)*100000 << " $!\n\n";
+            break;
+        }
+    }
+    return 0;
+}
